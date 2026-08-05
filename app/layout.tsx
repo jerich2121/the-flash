@@ -25,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://the-flash.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://flash-theta-ebon.vercel.app"),
   title: "THE FLASH — KRYNTIX STUDIO",
   description:
     "A cinematic scroll experience built around a reimagined Flash title reveal — by Kryntix Studio.",

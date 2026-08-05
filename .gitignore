@@ -40,3 +40,5 @@ next-env.d.ts
 
 # scratch reference material (deleted before final commit anyway)
 /scratch_ref/
+
+.vercel

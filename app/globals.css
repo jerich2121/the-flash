@@ -1,0 +1,290 @@
+@import "tailwindcss";
+
+:root {
+  /* Core brand */
+  --accent: #e11d2e; /* Flash crimson */
+  --accent-deep: #4a0a10; /* charred red falloff for shadow states */
+  --accent-soft: rgba(225, 29, 46, 0.14);
+
+  /* Extended palette — keeps the site from flattening to black+red */
+  --accent-2: #ffe066; /* speed-force yellow-white streak — glow, motion accents */
+  --accent-2-deep: #7a5c0c;
+  --gold: #ffb703; /* lightning-bolt gold trim — used sparingly, CTA states */
+
+  --bg-dark: #050203;
+  --bg-mid: #0d0605;
+  --bg-card: #130807;
+  --bg-deep: #030101;
+
+  --muted: rgba(255, 255, 255, 0.3);
+  --muted-strong: rgba(255, 255, 255, 0.55);
+  --white: #f5efe8;
+  --surface-border: rgba(225, 29, 46, 0.08);
+  --surface-border-glow: rgba(255, 224, 102, 0.1);
+
+  --radius-card: 14px;
+  --section-pad-desktop: 160px 48px;
+  --section-pad-mobile: 100px 24px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-background: var(--bg-dark);
+  --color-foreground: var(--white);
+  --font-display: var(--font-space-grotesk);
+  --font-secondary: var(--font-sora);
+  --font-hud: var(--font-jetbrains);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg-dark);
+  scroll-behavior: auto;
+}
+
+html.has-lenis {
+  scroll-behavior: auto;
+}
+
+body {
+  background: radial-gradient(ellipse 120% 60% at 50% -10%, rgba(225, 29, 46, 0.08), transparent 55%),
+    radial-gradient(ellipse 90% 50% at 85% 15%, rgba(255, 224, 102, 0.05), transparent 50%),
+    var(--bg-dark);
+  color: var(--white);
+  font-family: var(--font-secondary), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: #150a05;
+}
+
+/* Visible keyboard focus states everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Typography utility classes ---------- */
+
+.display {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+
+.secondary {
+  font-family: var(--font-secondary), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.mono {
+  font-family: var(--font-hud), monospace;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.label {
+  font-family: var(--font-hud), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted-strong);
+}
+
+.label-accent {
+  font-family: var(--font-hud), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(225, 29, 46, 0.5);
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-hud), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+
+.section-kicker::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--accent-2);
+  box-shadow: 0 0 8px var(--accent-2);
+}
+
+.body-muted {
+  color: var(--muted-strong);
+  font-family: var(--font-secondary), sans-serif;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.section-marker {
+  position: absolute;
+  font-family: var(--font-hud), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ---------- Film grain overlay ---------- */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNuKSIvPjwvc3ZnPg==");
+  background-size: 200px 200px;
+}
+
+/* ---------- Scrollbar ---------- */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-deep);
+  border-radius: 4px;
+}
+
+/* ---------- Shared glow / surface helpers ---------- */
+
+.hud-panel {
+  background: linear-gradient(180deg, rgba(19, 8, 7, 0.7), rgba(5, 2, 3, 0.55));
+  border: 1px solid var(--surface-border);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Glassmorphic surface card. */
+.card-surface {
+  background: rgba(19, 8, 7, 0.55);
+  border: 1px solid var(--surface-border-glow);
+  border-radius: 16px;
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 20px 40px -20px rgba(0, 0, 0, 0.7);
+}
+
+/* Eyebrow / badge pill. */
+.hud-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-border-glow);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  font-family: var(--font-hud), monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 24px -10px rgba(255, 224, 102, 0.35);
+}
+
+.hud-badge-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.text-glow {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+/* Stronger than .text-glow — used over the video scrub, where footage
+   brightness varies a lot more than the flat sections .text-glow covers. */
+.caption-shadow {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9), 0 6px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Speed-force streak — a soft, animated diagonal glow standing in for
+   Iron Man's Stark-OS HUD chrome. Tasteful, not a telemetry system: just a
+   hint of lightning-fast motion behind the hero copy. */
+.speed-streak {
+  position: absolute;
+  inset: -20% -10%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 224, 102, 0.16) 47%,
+    rgba(255, 183, 3, 0.22) 50%,
+    rgba(255, 224, 102, 0.16) 53%,
+    transparent 70%
+  );
+  background-size: 250% 250%;
+  animation: streak-drift 7s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes streak-drift {
+  0%, 100% { background-position: 0% 50%; opacity: 0.5; }
+  50% { background-position: 100% 50%; opacity: 0.9; }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.3; }
+  94% { opacity: 0.85; }
+  95% { opacity: 0.15; }
+  96% { opacity: 1; }
+}
+
+.flicker {
+  animation: flicker 6s infinite;
+}
+
+.bg-fade-in {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -93,14 +93,20 @@ export default function SectionBridge({
       className="relative flex min-h-[60vh] w-full flex-col justify-center gap-12 overflow-hidden bg-black px-6 py-24 text-[var(--white)] md:px-16"
     >
       {backgroundSrc && !bgFailed && (
-        <Image
-          src={backgroundSrc}
-          alt={backgroundAlt}
-          fill
-          sizes="100vw"
-          className="object-cover opacity-[0.45]"
-          onError={() => setBgFailed(true)}
-        />
+        <div
+          data-parallax="9"
+          className="pointer-events-none absolute inset-x-0 -inset-y-[15%]"
+          aria-hidden="true"
+        >
+          <Image
+            src={backgroundSrc}
+            alt={backgroundAlt}
+            fill
+            sizes="100vw"
+            className="object-cover opacity-[0.45]"
+            onError={() => setBgFailed(true)}
+          />
+        </div>
       )}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-black/90" />
 

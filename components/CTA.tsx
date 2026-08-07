@@ -93,14 +93,20 @@ export default function CTA() {
       className="relative flex flex-col items-center gap-14 overflow-hidden px-6 py-[100px] text-center md:px-12 md:py-[150px]"
     >
       {!bgFailed && (
-        <Image
-          src="/images/flash-transition-4.webp"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover opacity-[0.14]"
-          onError={() => setBgFailed(true)}
-        />
+        <div
+          data-parallax="9"
+          className="pointer-events-none absolute inset-x-0 -inset-y-[15%]"
+          aria-hidden="true"
+        >
+          <Image
+            src="/images/flash-transition-4.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover opacity-[0.14]"
+            onError={() => setBgFailed(true)}
+          />
+        </div>
       )}
       <div
         className="bg-fade-in glow-drift pointer-events-none absolute inset-0"

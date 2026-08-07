@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Sora, JetBrains_Mono } from "next/font/google";
+import { Anton, Sora, JetBrains_Mono } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const anton = Anton({
+  variable: "--font-anton",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -54,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${sora.variable} ${jetbrainsMono.variable} h-full`}
+      className={`${anton.variable} ${sora.variable} ${jetbrainsMono.variable} h-full`}
     >
       <body className="min-h-full bg-[var(--bg-dark)] text-[var(--white)] antialiased">
         <ScrollProgressBar />

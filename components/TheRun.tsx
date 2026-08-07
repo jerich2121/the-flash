@@ -60,6 +60,10 @@ export default function TheRun() {
   );
   const clashAt = CAPTIONED_BEATS[1]?.startProgress ?? 0.5;
 
+  // Progress-driven colour grade only — saturation lifts toward the clash with
+  // a touch of contrast. No rack-focus blur: the footage stays sharp throughout.
+  const canvasFilter = `saturate(${(1.08 + progress * 0.12).toFixed(3)}) contrast(1.04)`;
+
   if (reduced) {
     const beat = beatForProgress(1);
     return (
@@ -89,6 +93,8 @@ export default function TheRun() {
         frameCount={FRAME_COUNT}
         pinVh={PIN_VH}
         onProgress={handleProgress}
+        canvasFilter={canvasFilter}
+        parallax
       >
         <div className="video-vignette" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />

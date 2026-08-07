@@ -79,6 +79,33 @@ export default function MotionOrchestrator() {
           }
         );
       });
+
+      // Depth parallax — background-image layers and a few decorative blocks
+      // drift at a different rate than the page as they cross the viewport.
+      // data-parallax holds the yPercent travel (of the element's own height);
+      // background layers live in wrappers sized taller than their section so
+      // the drift never exposes an edge. Only elements NOT already running a
+      // transform animation (velocity-skew, glow-drift, sparks, reveal) carry
+      // this, so nothing fights over `transform`.
+      const parallaxTargets = gsap.utils.toArray<HTMLElement>("[data-parallax]");
+      parallaxTargets.forEach((el) => {
+        const speed = parseFloat(el.dataset.parallax || "0");
+        if (!speed) return;
+        gsap.fromTo(
+          el,
+          { yPercent: -speed },
+          {
+            yPercent: speed,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          }
+        );
+      });
     });
 
     const refresh = () => ScrollTrigger.refresh();

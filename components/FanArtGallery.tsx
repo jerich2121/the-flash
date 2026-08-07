@@ -46,8 +46,8 @@ const ROW_3: FlyingGalleryImage[] = [
 // wall itself stays visually clean.
 export default function FanArtGallery() {
   return (
-    <section aria-label="Fan art gallery" className="relative w-full overflow-hidden bg-black py-[100px] md:py-[150px]">
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-5 px-6 text-center">
+    <section id="gallery" aria-label="Fan art gallery" className="relative w-full overflow-hidden bg-black py-[100px] md:py-[150px]">
+      <div data-parallax="5" className="relative mx-auto flex max-w-5xl flex-col items-center gap-5 px-6 text-center">
         <ScrambleReveal as="span" className="section-kicker">
           KRYNTIX STUDIO — FAN ART
         </ScrambleReveal>
@@ -60,9 +60,9 @@ export default function FanArtGallery() {
       </div>
 
       <div className="mt-14 flex flex-col gap-5">
-        <FlyingGallery images={ROW_1} direction="left" secondsPerImage={6} label="Fan art, row 1" />
-        <FlyingGallery images={ROW_2} direction="right" secondsPerImage={7} label="Fan art, row 2" />
-        <FlyingGallery images={ROW_3} direction="left" secondsPerImage={5.5} label="Fan art, row 3" />
+        <FlyingGallery images={ROW_1} direction="left" secondsPerImage={6} label="Fan art, row 1" parallax={7} />
+        <FlyingGallery images={ROW_2} direction="right" secondsPerImage={7} label="Fan art, row 2" parallax={-5} />
+        <FlyingGallery images={ROW_3} direction="left" secondsPerImage={5.5} label="Fan art, row 3" parallax={9} />
       </div>
     </section>
   );

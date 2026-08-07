@@ -27,7 +27,7 @@ export default function HeroTransition() {
         aria-hidden="true"
       />
 
-      <div className="velocity-skew relative mx-auto flex max-w-5xl flex-col gap-12">
+      <div className="velocity-skew relative mx-auto flex max-w-3xl flex-col gap-10">
         <div className="reveal-up flex flex-col gap-5">
           <ScrambleReveal as="span" className="section-kicker">
             KRYNTIX STUDIO — FOR THE FANS

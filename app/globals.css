@@ -32,7 +32,7 @@
 @theme inline {
   --color-background: var(--bg-dark);
   --color-foreground: var(--white);
-  --font-display: var(--font-space-grotesk);
+  --font-display: var(--font-anton);
   --font-secondary: var(--font-sora);
   --font-hud: var(--font-jetbrains);
 }
@@ -80,10 +80,11 @@ input:focus-visible,
 
 .display {
   font-family: var(--font-display), sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-weight: 400; /* Anton ships a single 400 weight that already reads bold */
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 1.05;
+  text-wrap: balance;
 }
 
 .secondary {
@@ -232,7 +233,7 @@ input:focus-visible,
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 1px rgba(245, 239, 232, 0.1);
   filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7));
-  animation: footage-pan 20s ease-in-out infinite alternate;
+  animation: footage-pan 8s ease-in-out infinite alternate;
 }
 @keyframes footage-pan {
   from { background-position: 30% 35%; background-size: 160%; }
@@ -369,6 +370,14 @@ input:focus-visible,
 @keyframes btn-shimmer-sweep {
   0% { transform: translateX(-160%) skewX(-16deg); }
   55%, 100% { transform: translateX(360%) skewX(-16deg); }
+}
+
+/* Scroll parallax for the scrub-video canvas — a gentle vertical drift as the
+   pinned clip plays. Overscanned (scale > 1) so the drift never reveals an
+   edge; --parallax-y is written per frame from scrub progress. */
+.video-parallax {
+  transform: scale(1.06) translateY(var(--parallax-y, 0%));
+  will-change: transform;
 }
 
 /* ---------- Scrub-video HUD / overlays ---------- */

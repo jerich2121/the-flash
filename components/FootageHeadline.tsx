@@ -15,7 +15,10 @@ export default function FootageHeadline() {
       <Sparks />
       <div className="velocity-skew relative flex flex-col items-center gap-6 px-6 text-center">
         <span className="section-kicker justify-center">KRYNTIX STUDIO — THE LEGEND</span>
-        <h2 className="footage-text display text-[clamp(3rem,16vw,11rem)] leading-[0.88] tracking-[0.01em]">
+        <h2
+          data-parallax="6"
+          className="footage-text display text-[clamp(3rem,16vw,11rem)] leading-[0.88] tracking-[0.01em]"
+        >
           THE FLASH
         </h2>
         <p className="body-muted max-w-md text-sm md:text-base">

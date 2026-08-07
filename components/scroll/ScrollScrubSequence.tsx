@@ -31,6 +31,44 @@ interface ScrollScrubSequenceProps {
    * on-screen position at mount IS the viewport, so waiting for an
    * intersection callback just adds a pointless delay before loading starts. */
   eager?: boolean;
+  /** Optional CSS filter applied to the footage canvas (e.g. a progress-driven
+   * rack-focus blur + colour grade the parent computes off its beat map).
+   * Overlay/caption chrome are separate DOM layers, so they stay sharp. */
+  canvasFilter?: string;
+  /** Composite the fading tail of recent frames when scrubbing fast, for
+   * speed-trail after-images. Off for the logo-reveal footage, where smearing
+   * the forming wordmark hurts legibility. */
+  motionEcho?: boolean;
+  /** Gently drift the footage vertically as the pinned clip scrubs, for a
+   * parallax feel. Overscanned via .video-parallax so the drift never exposes
+   * an edge. Off for the logo reveal (would crop the burned-in wordmark). */
+  parallax?: boolean;
+}
+
+// Cover-fit an image onto the canvas (like object-fit: cover), centered.
+function drawImageCover(
+  ctx: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  width: number,
+  height: number
+) {
+  const canvasAspect = width / height;
+  const imgAspect = img.naturalWidth / img.naturalHeight;
+  let drawWidth = width;
+  let drawHeight = height;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  if (imgAspect > canvasAspect) {
+    drawHeight = height;
+    drawWidth = drawHeight * imgAspect;
+    offsetX = (width - drawWidth) / 2;
+  } else {
+    drawWidth = width;
+    drawHeight = drawWidth / imgAspect;
+    offsetY = (height - drawHeight) / 2;
+  }
+  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 }
 
 // Adapted from the eco-power sibling project's ScrollScrubSequence. Two
@@ -56,11 +94,15 @@ export default function ScrollScrubSequence({
   onLoadProgress,
   externalProgress,
   eager = false,
+  canvasFilter,
+  motionEcho = true,
+  parallax = false,
 }: ScrollScrubSequenceProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrameRef = useRef(0);
+  const lastProgressRef = useRef(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const reducedMotion = useReducedMotion();
   // Initialized straight from `eager` (a static prop, never toggled after
@@ -124,7 +166,7 @@ export default function ScrollScrubSequence({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, framesPath, frameCount]);
 
-  const drawFrame = (index: number) => {
+  const drawFrame = (index: number, echo = 0) => {
     const canvas = canvasRef.current;
     const img = imagesRef.current[index];
     if (!canvas || !img || !img.complete || img.naturalWidth === 0) return;
@@ -142,25 +184,21 @@ export default function ScrollScrubSequence({
       canvas.height = targetHeight;
     }
 
-    const canvasAspect = canvas.width / canvas.height;
-    const imgAspect = img.naturalWidth / img.naturalHeight;
-    let drawWidth = canvas.width;
-    let drawHeight = canvas.height;
-    let offsetX = 0;
-    let offsetY = 0;
-
-    if (imgAspect > canvasAspect) {
-      drawHeight = canvas.height;
-      drawWidth = drawHeight * imgAspect;
-      offsetX = (canvas.width - drawWidth) / 2;
+    if (motionEcho && echo > 0) {
+      // Speed-trail after-images: instead of clearing, fade the previous frame
+      // by painting bg over it at partial alpha, then lay the new frame down
+      // slightly translucent so the decaying tail of recent frames bleeds
+      // through as motion ghosts. Self-crisps as Lenis eases velocity down.
+      ctx.globalAlpha = 1 - echo * 0.5;
+      ctx.fillStyle = "#050203";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1 - echo * 0.3;
+      drawImageCover(ctx, img, canvas.width, canvas.height);
+      ctx.globalAlpha = 1;
     } else {
-      drawWidth = canvas.width;
-      drawHeight = drawWidth / imgAspect;
-      offsetY = (canvas.height - drawHeight) / 2;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawImageCover(ctx, img, canvas.width, canvas.height);
     }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   };
 
   // Reduced motion: skip the scrub entirely, show the static end-state frame.
@@ -204,8 +242,18 @@ export default function ScrollScrubSequence({
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         const index = Math.floor(self.progress * (frameCount - 1));
+        const echo = motionEcho
+          ? gsap.utils.clamp(0, 1, Math.abs(self.progress - lastProgressRef.current) * 22)
+          : 0;
+        lastProgressRef.current = self.progress;
         currentFrameRef.current = index;
-        drawFrame(index);
+        drawFrame(index, echo);
+        if (parallax && canvasRef.current) {
+          // -2.5%..+2.5% drift across the scrub; CSS var so it never collides
+          // with the filter React writes to the canvas style each frame.
+          const shift = (self.progress - 0.5) * 5;
+          canvasRef.current.style.setProperty("--parallax-y", `${shift.toFixed(2)}%`);
+        }
         onProgress?.(self.progress);
       },
     });
@@ -237,7 +285,11 @@ export default function ScrollScrubSequence({
         isExternal ? "h-full w-full" : "h-screen w-full"
       } ${className}`}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      <canvas
+        ref={canvasRef}
+        className={`absolute inset-0 h-full w-full ${parallax ? "video-parallax" : ""}`}
+        style={{ filter: canvasFilter, willChange: canvasFilter ? "filter" : undefined }}
+      />
       {!isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-[var(--bg-dark)]/60">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent-2)] border-t-transparent" />

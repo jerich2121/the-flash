@@ -25,6 +25,11 @@ interface FlyingGalleryProps {
    * share a page, so assistive tech doesn't announce three identically
    * named lists. */
   label?: string;
+  /** yPercent scroll-parallax drift for this row (picked up by
+   * MotionOrchestrator's [data-parallax] handler). Vary it per row for a
+   * layered depth effect. Applied to the inner track container, since the
+   * full-bleed outer wrapper already carries a centering transform. */
+  parallax?: number;
 }
 
 // Full-bleed continuous horizontal image marquee, ported from the
@@ -41,6 +46,7 @@ export default function FlyingGallery({
   direction = "left",
   secondsPerImage = 6,
   label = "Fan art images",
+  parallax,
 }: FlyingGalleryProps) {
   const trackContainerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -115,6 +121,7 @@ export default function FlyingGallery({
         ref={trackContainerRef}
         role="list"
         aria-label={label}
+        data-parallax={parallax ? String(parallax) : undefined}
         className={
           reducedMotion
             ? "relative z-10 flex gap-5 overflow-x-auto px-6 pb-2 snap-x snap-mandatory [-webkit-overflow-scrolling:touch]"

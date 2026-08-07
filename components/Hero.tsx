@@ -63,6 +63,7 @@ export default function Hero() {
         frameCount={FRAME_COUNT}
         pinVh={PIN_VH}
         eager
+        motionEcho={false}
         onProgress={setProgress}
         onLoadProgress={setLoadProgress}
       >

@@ -19,7 +19,7 @@ function Half() {
           <span
             className={
               i % 2 === 0
-                ? "display title-gradient text-[clamp(1.2rem,3.8vw,2.2rem)] tracking-[0.12em]"
+                ? "display title-gradient title-sheen text-[clamp(1.2rem,3.8vw,2.2rem)] tracking-[0.12em]"
                 : "display text-[clamp(1.2rem,3.8vw,2.2rem)] tracking-[0.12em] text-[var(--white)]"
             }
           >

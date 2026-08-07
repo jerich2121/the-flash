@@ -114,7 +114,7 @@ export default function SectionBridge({
         </span>
       </div>
 
-      <div className="relative mx-auto w-full max-w-4xl text-center">
+      <div className="velocity-skew relative mx-auto w-full max-w-4xl text-center">
         <ScrambleReveal as="span" className="section-kicker justify-center">
           {eyebrow}
         </ScrambleReveal>

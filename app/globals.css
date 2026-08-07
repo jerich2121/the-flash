@@ -16,7 +16,7 @@
   --bg-card: #130807;
   --bg-deep: #030101;
 
-  --muted: rgba(255, 255, 255, 0.3);
+  --muted: rgba(255, 255, 255, 0.5);
   --muted-strong: rgba(255, 255, 255, 0.55);
   --white: #f5efe8;
   --surface-border: rgba(225, 29, 46, 0.08);
@@ -159,6 +159,140 @@ input:focus-visible,
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6));
 }
 
+/* Moving sheen for gradient headlines — a bright band travels through the
+   crimson->gold->speed-force fill so accent words feel lit rather than flat.
+   Pairs with .title-gradient (which supplies clip + transparent fill +
+   legibility drop-shadow); this only overrides the background and adds the
+   sweep, so apply both together: `title-gradient title-sheen`. Defined AFTER
+   .title-gradient so its background wins the cascade. */
+.title-sheen {
+  background: linear-gradient(
+    100deg,
+    var(--accent) 0%,
+    var(--gold) 26%,
+    #fff4d2 42%,
+    var(--accent-2) 55%,
+    var(--gold) 74%,
+    var(--accent) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: title-sheen-move 7s linear infinite;
+}
+@keyframes title-sheen-move {
+  from { background-position: 140% 0; }
+  to { background-position: -40% 0; }
+}
+
+/* Electric glow flicker for the scroll-caption scene titles — animates the
+   drop-shadow ONLY (never opacity, which the scroll system owns), so captions
+   still fade in/out on scrub while the letters pulse with a red/gold charge.
+   Overrides .title-gradient's static filter; the 0%/100% keyframes match it so
+   there's no jump. Use as `title-gradient title-electric` — do NOT also add
+   title-sheen (both set `animation`). */
+.title-electric {
+  animation: title-electric-glow 4.6s ease-in-out infinite;
+}
+@keyframes title-electric-glow {
+  0%, 100% { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 6px rgba(225, 29, 46, 0)); }
+  46% { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 16px rgba(255, 224, 102, 0.5)); }
+  49% { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 5px rgba(255, 224, 102, 0.15)); }
+  52% { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 18px rgba(225, 29, 46, 0.5)); }
+}
+
+/* Slow drift for the ambient radial-glow layers so the background breathes
+   instead of sitting perfectly still. Scale stays >1 so translating never
+   exposes the layer's edges. Animates transform only — no conflict with the
+   GSAP opacity fade these .bg-fade-in layers already run. */
+.glow-drift {
+  animation: glow-drift-move 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes glow-drift-move {
+  from { transform: translate3d(-2%, -1.5%, 0) scale(1.06); }
+  to { transform: translate3d(2.5%, 2%, 0) scale(1.12); }
+}
+
+/* Scroll-velocity skew — SmoothScroll drives skewY on these elements from
+   Lenis velocity, so fast scrolling makes the text block lean, then settle. */
+.velocity-skew {
+  will-change: transform;
+}
+
+/* Footage-filled headline — a Flash still shows through the letters and slowly
+   pans/zooms so the type reads like moving footage rather than a flat fill. */
+.footage-text {
+  background-image: url("/images/flash-gallery-storm.webp");
+  background-size: 165%;
+  background-position: 40% 40%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgba(245, 239, 232, 0.1);
+  filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7));
+  animation: footage-pan 20s ease-in-out infinite alternate;
+}
+@keyframes footage-pan {
+  from { background-position: 30% 35%; background-size: 160%; }
+  to { background-position: 70% 60%; background-size: 190%; }
+}
+
+/* Floating speed-force sparks — small embers drifting upward behind the text
+   panels. Positions/timing are a deterministic set (see Sparks.tsx) to avoid
+   SSR hydration mismatch. */
+.spark {
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0;
+  animation: spark-rise var(--spark-dur, 7s) ease-in-out infinite;
+  animation-delay: var(--spark-delay, 0s);
+  will-change: transform, opacity;
+}
+@keyframes spark-rise {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  12% { opacity: 0.85; }
+  80% { opacity: 0.6; }
+  100% { transform: translateY(calc(var(--spark-rise, 90px) * -1)) scale(1.1); opacity: 0; }
+}
+
+/* Animated conic glow border for cards / buttons — a light travels around the
+   edge. @property makes the conic angle animatable; the double-mask shows only
+   a 1px ring so the fill stays clear. border-radius: inherit follows whatever
+   radius the host element has (card or pill). */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 52%,
+    var(--accent) 72%,
+    var(--gold) 86%,
+    var(--accent-2) 94%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: border-angle-spin 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes border-angle-spin {
+  to { --border-angle: 360deg; }
+}
+
 .section-marker {
   position: absolute;
   font-family: var(--font-hud), monospace;
@@ -235,6 +369,36 @@ input:focus-visible,
 @keyframes btn-shimmer-sweep {
   0% { transform: translateX(-160%) skewX(-16deg); }
   55%, 100% { transform: translateX(360%) skewX(-16deg); }
+}
+
+/* ---------- Scrub-video HUD / overlays ---------- */
+
+/* Diagonal speed streaks over the run footage. Opacity is driven per-frame
+   from scrub velocity (see SpeedLines.tsx); this just supplies the moving
+   light lines. */
+.speed-lines {
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0 7px,
+    rgba(255, 224, 102, 0.11) 7px 8px,
+    transparent 8px 20px
+  );
+  background-size: 200% 100%;
+  animation: speed-lines-move 0.55s linear infinite;
+  mix-blend-mode: screen;
+}
+@keyframes speed-lines-move {
+  from { background-position: 0 0; }
+  to { background-position: -200% 0; }
+}
+
+/* Blinking REC dot for the viewfinder HUD. */
+.rec-pulse {
+  animation: rec-pulse 1.4s ease-in-out infinite;
+}
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
 }
 
 /* ---------- Film grain overlay ---------- */

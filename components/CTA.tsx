@@ -7,6 +7,7 @@ import { useReducedMotion } from "@/app/lib/useReducedMotion";
 import MixedHeadline from "@/components/scroll/MixedHeadline";
 import RevealText from "@/components/scroll/RevealText";
 import ScrambleReveal from "@/components/scroll/ScrambleReveal";
+import Sparks from "@/components/Sparks";
 import { FRAME_COUNT as HERO_FRAME_COUNT, CLIP_DURATION as HERO_DURATION } from "@/app/lib/beats";
 import { FRAME_COUNT as RUN_FRAME_COUNT, CLIP_DURATION as RUN_DURATION } from "@/app/lib/runBeats";
 
@@ -89,7 +90,7 @@ export default function CTA() {
   return (
     <section
       id="about"
-      className="relative flex flex-col items-center gap-14 overflow-hidden px-6 py-[100px] text-center md:px-12 md:py-[160px]"
+      className="relative flex flex-col items-center gap-14 overflow-hidden px-6 py-[100px] text-center md:px-12 md:py-[150px]"
     >
       {!bgFailed && (
         <Image
@@ -102,7 +103,7 @@ export default function CTA() {
         />
       )}
       <div
-        className="bg-fade-in pointer-events-none absolute inset-0"
+        className="bg-fade-in glow-drift pointer-events-none absolute inset-0"
         data-fade-to="1"
         style={{
           background:
@@ -110,6 +111,7 @@ export default function CTA() {
         }}
         aria-hidden="true"
       />
+      <Sparks />
 
       <div ref={headingWrapRef} className="relative flex max-w-3xl flex-col items-center gap-6">
         <ScrambleReveal as="span" className="section-kicker">
@@ -172,7 +174,7 @@ export default function CTA() {
           href="https://instagram.com/kryntixstudio"
           target="_blank"
           rel="noopener noreferrer"
-          className="mono card-surface rounded-full px-8 py-3.5 text-sm tracking-[0.08em] text-[var(--white)] transition-transform hover:scale-[1.03]"
+          className="mono card-surface glow-border rounded-full px-8 py-3.5 text-sm tracking-[0.08em] text-[var(--white)] transition-transform hover:scale-[1.03]"
         >
           @kryntixstudio ON INSTAGRAM
         </a>

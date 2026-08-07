@@ -15,10 +15,10 @@ export default function HeroTransition() {
   return (
     <section
       aria-label="About this fan site"
-      className="relative w-full overflow-hidden px-6 py-[100px] md:px-12 md:py-[140px]"
+      className="relative w-full overflow-hidden px-6 py-[100px] md:px-12 md:py-[150px]"
     >
       <div
-        className="bg-fade-in pointer-events-none absolute inset-0"
+        className="bg-fade-in glow-drift pointer-events-none absolute inset-0"
         data-fade-to="1"
         style={{
           background:
@@ -27,7 +27,7 @@ export default function HeroTransition() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto flex max-w-5xl flex-col gap-12">
+      <div className="velocity-skew relative mx-auto flex max-w-5xl flex-col gap-12">
         <div className="reveal-up flex flex-col gap-5">
           <ScrambleReveal as="span" className="section-kicker">
             KRYNTIX STUDIO — FOR THE FANS

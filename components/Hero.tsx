@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ScrollScrubSequence from "@/components/scroll/ScrollScrubSequence";
+import ViewfinderHUD from "@/components/scroll/ViewfinderHUD";
+import LetterboxBars from "@/components/scroll/LetterboxBars";
 import SiteLoader from "@/components/SiteLoader";
 import { useReducedMotion } from "@/app/lib/useReducedMotion";
 import { CLIP_DURATION, FRAME_COUNT, TITLE_REVEAL_PROGRESS } from "@/app/lib/beats";
@@ -52,6 +54,10 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative w-full bg-black">
+      {/* The visible title is burned into the hero footage (an image), so the
+          document needs a real top-level heading for SEO and screen readers.
+          Kept off-screen with sr-only rather than duplicated on-screen. */}
+      <h1 className="sr-only">The Flash — a Kryntix Studio fan film</h1>
       <ScrollScrubSequence
         framesPath="flash-hero"
         frameCount={FRAME_COUNT}
@@ -61,6 +67,18 @@ export default function Hero() {
         onLoadProgress={setLoadProgress}
       >
         <div className="video-vignette" aria-hidden="true" />
+        {!reduced && (
+          <>
+            <LetterboxBars progress={progress} />
+            <ViewfinderHUD
+              progress={progress}
+              durationSeconds={CLIP_DURATION}
+              sceneLabel="TITLE REVEAL"
+              sceneIndex={0}
+              sceneTotal={1}
+            />
+          </>
+        )}
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/55 via-transparent to-black/85 transition-opacity duration-700"
           style={{ opacity: chromeVisible ? 1 : 0 }}
@@ -85,7 +103,7 @@ export default function Hero() {
             KRYNTIX STUDIO — A FLASH FAN FILM
           </span>
           <p
-            className="display title-gradient text-center text-[clamp(0.95rem,2.6vw,1.35rem)] tracking-[0.2em]"
+            className="display title-gradient title-sheen text-center text-[clamp(0.95rem,2.6vw,1.35rem)] tracking-[0.2em]"
             style={{
               transform: chromeVisible ? "translateY(0)" : "translateY(10px)",
               transition: "transform 700ms var(--ease-out)",

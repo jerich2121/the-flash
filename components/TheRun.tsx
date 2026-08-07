@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import ScrollScrubSequence from "@/components/scroll/ScrollScrubSequence";
+import ViewfinderHUD from "@/components/scroll/ViewfinderHUD";
+import LetterboxBars from "@/components/scroll/LetterboxBars";
+import SpeedLines from "@/components/scroll/SpeedLines";
+import ChromaticImpact from "@/components/scroll/ChromaticImpact";
 import { useReducedMotion } from "@/app/lib/useReducedMotion";
 import { CLIP_DURATION, FRAME_COUNT, BEATS, beatForProgress } from "@/app/lib/runBeats";
 
@@ -36,6 +40,26 @@ export default function TheRun() {
   const reduced = useReducedMotion();
   const [progress, setProgress] = useState(0);
 
+  // Track scrub velocity for the speed-lines overlay: bump on each frame by
+  // how far progress jumped; SpeedLines decays it back down when scrolling stops.
+  const velocityRef = useRef(0);
+  const lastProgressRef = useRef(0);
+  const handleProgress = useCallback((p: number) => {
+    velocityRef.current = Math.min(
+      1.4,
+      velocityRef.current + Math.abs(p - lastProgressRef.current) * 14
+    );
+    lastProgressRef.current = p;
+    setProgress(p);
+  }, []);
+
+  const current = beatForProgress(progress);
+  const sceneIndex = Math.max(
+    0,
+    CAPTIONED_BEATS.findIndex((b) => b.id === current.id)
+  );
+  const clashAt = CAPTIONED_BEATS[1]?.startProgress ?? 0.5;
+
   if (reduced) {
     const beat = beatForProgress(1);
     return (
@@ -45,7 +69,7 @@ export default function TheRun() {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
           <div className="relative z-40 flex h-full flex-col items-center justify-end gap-4 px-6 pb-16 text-center">
             <span className="section-kicker">KRYNTIX STUDIO — THE RUN</span>
-            <h2 className="display title-gradient text-[clamp(1.6rem,5vw,2.6rem)]">
+            <h2 className="display title-gradient title-electric text-[clamp(1.6rem,5vw,2.6rem)]">
               {beat.title}
             </h2>
             <p className="body-muted max-w-md text-sm">
@@ -64,10 +88,21 @@ export default function TheRun() {
         framesPath="flash-run"
         frameCount={FRAME_COUNT}
         pinVh={PIN_VH}
-        onProgress={setProgress}
+        onProgress={handleProgress}
       >
         <div className="video-vignette" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
+
+        <SpeedLines velocityRef={velocityRef} />
+        <LetterboxBars progress={progress} />
+        <ViewfinderHUD
+          progress={progress}
+          durationSeconds={CLIP_DURATION}
+          sceneLabel={current.title || "—"}
+          sceneIndex={sceneIndex}
+          sceneTotal={CAPTIONED_BEATS.length}
+        />
+        <ChromaticImpact progress={progress} at={clashAt} />
 
         {CAPTIONED_BEATS.map((beat, i) => (
           <div
@@ -79,7 +114,7 @@ export default function TheRun() {
               <span className="hud-badge-dot" />
               KRYNTIX STUDIO — SCENE {String(i + 1).padStart(2, "0")}/{String(CAPTIONED_BEATS.length).padStart(2, "0")}
             </span>
-            <h3 className="display title-gradient text-[clamp(1.6rem,5.5vw,3rem)]">
+            <h3 className="display title-gradient title-electric text-[clamp(1.6rem,5.5vw,3rem)]">
               {beat.title}
             </h3>
             <p className="body-muted caption-shadow max-w-md text-sm md:text-base">{beat.line}</p>

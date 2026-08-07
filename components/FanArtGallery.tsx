@@ -46,7 +46,7 @@ const ROW_3: FlyingGalleryImage[] = [
 // wall itself stays visually clean.
 export default function FanArtGallery() {
   return (
-    <section aria-label="Fan art gallery" className="relative w-full overflow-hidden bg-black py-[100px] md:py-[140px]">
+    <section aria-label="Fan art gallery" className="relative w-full overflow-hidden bg-black py-[100px] md:py-[150px]">
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-5 px-6 text-center">
         <ScrambleReveal as="span" className="section-kicker">
           KRYNTIX STUDIO — FAN ART

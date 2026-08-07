@@ -37,8 +37,26 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
+    // Scroll-velocity skew: lean the ".velocity-skew" text blocks in the
+    // direction of travel proportional to Lenis's current velocity, then let
+    // them settle back to flat when scrolling slows. quickSetter writes skewY
+    // to all matching elements each frame; the lerp smooths the response so it
+    // eases rather than snapping. Targets have no other transform, so writing
+    // skewY here can't clobber anything.
+    const skewSetter = gsap.quickSetter(".velocity-skew", "skewY", "deg");
+    let skew = 0;
+    const skewTick = () => {
+      const velocity = (lenis as unknown as { velocity?: number }).velocity ?? 0;
+      const target = gsap.utils.clamp(-2.2, 2.2, velocity * 0.05);
+      skew += (target - skew) * 0.12;
+      if (Math.abs(skew) < 0.001) skew = 0;
+      skewSetter(skew);
+    };
+    gsap.ticker.add(skewTick);
+
     return () => {
       gsap.ticker.remove(tick);
+      gsap.ticker.remove(skewTick);
       lenis.destroy();
       lenisRef.current = null;
       document.documentElement.classList.remove("has-lenis");

@@ -26,7 +26,7 @@ export default function Footer() {
           section from reading as a flat, plain afterthought without
           competing with the CTA's own moment. */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-60"
+        className="glow-drift pointer-events-none absolute inset-0 opacity-60"
         style={{
           background:
             "radial-gradient(ellipse 60% 50% at 15% 0%, rgba(225,29,46,0.06), transparent 60%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(255,224,102,0.05), transparent 60%)",

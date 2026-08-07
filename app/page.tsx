@@ -6,6 +6,7 @@ import TheRunFinale from "@/components/TheRunFinale";
 import RunBreakdown from "@/components/RunBreakdown";
 import SectionBridge from "@/components/SectionBridge";
 import FanArtGallery from "@/components/FanArtGallery";
+import FootageHeadline from "@/components/FootageHeadline";
 import MarqueeTicker from "@/components/MarqueeTicker";
 import MotionOrchestrator from "@/components/MotionOrchestrator";
 import CTA from "@/components/CTA";
@@ -49,6 +50,7 @@ export default function Home() {
         />
         <TheRunFinale />
         <RunBreakdown />
+        <FootageHeadline />
         <MarqueeTicker />
         <HeroTransition />
         <CTA />

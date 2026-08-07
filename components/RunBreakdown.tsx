@@ -74,10 +74,10 @@ export default function RunBreakdown() {
   return (
     <section
       aria-label="TheRun scene breakdown"
-      className="relative w-full bg-black px-6 py-[100px] md:px-12 md:py-[140px]"
+      className="relative w-full bg-black px-6 py-[100px] md:px-12 md:py-[150px]"
     >
       <div
-        className="bg-fade-in pointer-events-none absolute inset-0"
+        className="bg-fade-in glow-drift pointer-events-none absolute inset-0"
         data-fade-to="1"
         style={{
           background:
@@ -86,7 +86,7 @@ export default function RunBreakdown() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-14">
+      <div className="velocity-skew relative mx-auto flex max-w-6xl flex-col gap-14">
         <div className="reveal-up flex flex-col items-center gap-5 text-center">
           <span className="section-kicker">KRYNTIX STUDIO — SCENE BREAKDOWN</span>
           <MixedHeadline
@@ -112,12 +112,12 @@ export default function RunBreakdown() {
             <div
               key={beat.n}
               style={reducedMotion ? undefined : { opacity: 0 }}
-              className="card-surface flex flex-col gap-3 p-6"
+              className="card-surface glow-border flex flex-col gap-3 p-6"
             >
               <span className="mono text-[0.7rem] tracking-[0.2em] text-[var(--accent-2)]">
                 {beat.n}
               </span>
-              <h3 className="display title-gradient text-[1.05rem]">{beat.title}</h3>
+              <h3 className="display title-gradient title-sheen text-[1.05rem]">{beat.title}</h3>
               <p className="body-muted text-sm leading-relaxed">{beat.line}</p>
             </div>
           ))}

@@ -160,7 +160,7 @@ export default function CTA() {
           href="https://kryntixstudio.vercel.app"
           target="_blank"
           rel="noopener noreferrer"
-          className="secondary rounded-full px-8 py-3.5 text-sm tracking-[0.08em] text-black transition-transform hover:scale-[1.03]"
+          className="btn-shimmer secondary relative overflow-hidden rounded-full px-8 py-3.5 text-sm tracking-[0.08em] text-black transition-transform hover:scale-[1.03]"
           style={{
             background: "linear-gradient(120deg, var(--accent), var(--gold))",
             boxShadow: "0 20px 40px -18px rgba(225,29,46,0.55)",

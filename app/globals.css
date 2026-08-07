@@ -185,6 +185,58 @@ input:focus-visible,
   );
 }
 
+/* On touch devices (no hover pointer) the gallery's hover-reveal captions
+   would never appear — so a phone viewer, e.g. someone watching a screen
+   recording of this site, would see a nameless wall of drifting stills. Force
+   the caption scrim + label visible there, while keeping the clean
+   hover-to-reveal behavior on mouse/trackpad devices. Unlayered, so these win
+   over Tailwind's layered opacity-0 utility without !important. */
+@media (hover: none) {
+  .gallery-caption {
+    opacity: 1;
+  }
+  .gallery-caption-label {
+    transform: none;
+  }
+}
+
+/* ---------- Marquee ticker band ---------- */
+
+/* Track holds two identical halves; sliding it -50% loops seamlessly. */
+.marquee-track {
+  animation: marquee-scroll 24s linear infinite;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Button shimmer sweep ---------- */
+
+/* A diagonal light streak that sweeps across a button, echoing the hero's
+   speed-streak. Pauses between passes so it reads as a highlight, not a
+   constant strobe. */
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: translateX(-160%) skewX(-16deg);
+  animation: btn-shimmer-sweep 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes btn-shimmer-sweep {
+  0% { transform: translateX(-160%) skewX(-16deg); }
+  55%, 100% { transform: translateX(360%) skewX(-16deg); }
+}
+
 /* ---------- Film grain overlay ---------- */
 
 .grain {

@@ -95,10 +95,10 @@ export default function FlyingGallery({
             className="object-cover transition-transform duration-500 group-hover:scale-105 group-focus-within:scale-105"
           />
           <div
-            className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/85 via-black/10 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+            className="gallery-caption pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/85 via-black/10 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
             aria-hidden="true"
           >
-            <span className="mono block translate-y-2 text-[0.68rem] uppercase tracking-[0.2em] text-[var(--white)] transition-transform duration-300 group-hover:translate-y-0 group-focus-within:translate-y-0">
+            <span className="gallery-caption-label mono block translate-y-2 text-[0.68rem] uppercase tracking-[0.2em] text-[var(--white)] transition-transform duration-300 group-hover:translate-y-0 group-focus-within:translate-y-0">
               {img.caption}
             </span>
           </div>

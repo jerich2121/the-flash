@@ -98,11 +98,11 @@ export default function SectionBridge({
           alt={backgroundAlt}
           fill
           sizes="100vw"
-          className="object-cover opacity-[0.16]"
+          className="object-cover opacity-[0.45]"
           onError={() => setBgFailed(true)}
         />
       )}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black via-black/70 to-black" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-black/90" />
 
       <div className="relative flex w-full items-center justify-center gap-4 font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted-strong)] md:gap-6 md:text-sm">
         <span ref={fromBadgeRef} style={reducedMotion ? undefined : { opacity: 0 }}>

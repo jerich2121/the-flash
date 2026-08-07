@@ -40,14 +40,14 @@ const RAW_BEATS: Omit<RunBeat, "startProgress" | "endProgress">[] = [
   {
     id: "the-break",
     title: "NO HESITATION",
-    line: "Glass and static, a fist through the moment — a heartbeat you can't slow down.",
+    line: "Shattered glass, raw static, a fist through the moment — too fast to second-guess.",
     startSeconds: 0.63667,
     endSeconds: 2.23333,
   },
   {
     id: "common-ground",
     title: "COMMON GROUND",
-    line: "Through the wreckage, two lightning trails finally reach the same hand.",
+    line: "Out of the wreckage, two rival lightning trails reach for the same hand.",
     startSeconds: 2.23333,
     endSeconds: CLIP_DURATION,
   },

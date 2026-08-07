@@ -40,14 +40,14 @@ const RAW_BEATS: Omit<RunBeat, "startProgress" | "endProgress">[] = [
   {
     id: "desert-speed",
     title: "DESERT SPEED",
-    line: "Full lightning trail, open desert, aircraft and explosions on the horizon.",
+    line: "Open desert. A trail of lightning. The horizon already burning behind him.",
     startSeconds: 0,
     endSeconds: 4.5,
   },
   {
     id: "the-clash",
     title: "THE CLASH",
-    line: "Two speedsters collide — orange-red lightning against cyan-blue.",
+    line: "Two speedsters, one collision — crimson lightning slams into electric blue.",
     startSeconds: 4.5,
     endSeconds: CLIP_DURATION,
   },

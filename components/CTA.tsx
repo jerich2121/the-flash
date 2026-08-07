@@ -133,9 +133,9 @@ export default function CTA() {
           start="top 82%"
           className="body-muted max-w-xl text-[1.05rem]"
         >
-          Kryntix Studio is a small collective building tribute sites for the heroes we
-          grew up watching. This one&apos;s for The Flash — no plot claims beyond what you
-          see here, no leaked material, just craft and love for the Scarlet Speedster.
+          Kryntix Studio is a small crew building tribute sites for the heroes we grew up
+          watching. This one&apos;s for The Flash — no leaks, no spoilers, no plot claims.
+          Just craft, motion, and a whole lot of love for the Scarlet Speedster.
         </RevealText>
       </div>
 

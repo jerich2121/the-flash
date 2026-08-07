@@ -60,6 +60,7 @@ export default function Hero() {
         onProgress={setProgress}
         onLoadProgress={setLoadProgress}
       >
+        <div className="video-vignette" aria-hidden="true" />
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/55 via-transparent to-black/85 transition-opacity duration-700"
           style={{ opacity: chromeVisible ? 1 : 0 }}
@@ -76,13 +77,22 @@ export default function Hero() {
             lower half of this close-crop footage, so chrome text is kept
             out of that band entirely rather than laid over it. */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-24 z-20 flex justify-center px-6 transition-opacity duration-700 md:top-28"
+          className="pointer-events-none absolute inset-x-0 top-24 z-20 flex flex-col items-center gap-4 px-6 transition-opacity duration-700 md:top-28"
           style={{ opacity: chromeVisible ? 1 : 0 }}
         >
           <span className="hud-badge">
             <span className="hud-badge-dot" />
-            KRYNTIX STUDIO — FAN FILM
+            KRYNTIX STUDIO — A FLASH FAN FILM
           </span>
+          <p
+            className="display title-gradient text-center text-[clamp(0.95rem,2.6vw,1.35rem)] tracking-[0.2em]"
+            style={{
+              transform: chromeVisible ? "translateY(0)" : "translateY(10px)",
+              transition: "transform 700ms var(--ease-out)",
+            }}
+          >
+            FASTER THAN THE MOMENT
+          </p>
         </div>
 
         {reduced ? (

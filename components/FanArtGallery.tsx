@@ -56,7 +56,7 @@ export default function FanArtGallery() {
           className="display text-glow max-w-2xl text-[clamp(1.7rem,4.6vw,2.8rem)] text-[var(--white)]"
           segments={[{ text: "A GALLERY BUILT AT" }, { text: "LIGHTNING SPEED", accent: true }]}
         />
-        <p className="body-muted max-w-xl text-[1.05rem]">Hover any still for the shot.</p>
+        <p className="body-muted max-w-xl text-[1.05rem]">Every still, hand-crafted. Hover any frame to name the shot.</p>
       </div>
 
       <div className="mt-14 flex flex-col gap-5">

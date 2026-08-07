@@ -44,8 +44,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="body-muted max-w-sm text-sm">
-              Part of the Kryntix fan-site series — cinematic scroll experiences built
-              to showcase what a real studio does with a browser and a scroll bar.
+              Part of the Kryntix fan-site series — cinematic scroll experiences that
+              show what a browser and a scroll bar can really do.
             </p>
           </div>
 

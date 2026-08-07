@@ -38,10 +38,11 @@ export default function TheRunFinale() {
     return (
       <section id="the-run-finale" className="relative w-full bg-black">
         <ScrollScrubSequence framesPath="flash-run-2" frameCount={FRAME_COUNT} eager>
+          <div className="video-vignette" aria-hidden="true" />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
           <div className="relative z-40 flex h-full flex-col items-center justify-end gap-4 px-6 pb-16 text-center">
             <span className="section-kicker">KRYNTIX STUDIO — THE RUN, CONTINUED</span>
-            <h2 className="display text-glow text-[clamp(1.6rem,5vw,2.6rem)] text-[var(--white)]">
+            <h2 className="display title-gradient text-[clamp(1.6rem,5vw,2.6rem)]">
               {beat.title}
             </h2>
             <p className="body-muted max-w-md text-sm">
@@ -62,6 +63,7 @@ export default function TheRunFinale() {
         pinVh={PIN_VH}
         onProgress={setProgress}
       >
+        <div className="video-vignette" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
 
         {CAPTIONED_BEATS.map((beat, i) => (
@@ -74,7 +76,7 @@ export default function TheRunFinale() {
               <span className="hud-badge-dot" />
               KRYNTIX STUDIO — SCENE {String(i + 1).padStart(2, "0")}/{String(CAPTIONED_BEATS.length).padStart(2, "0")}
             </span>
-            <h3 className="display caption-shadow text-[clamp(1.6rem,5.5vw,3rem)] text-[var(--white)]">
+            <h3 className="display title-gradient text-[clamp(1.6rem,5.5vw,3rem)]">
               {beat.title}
             </h3>
             <p className="body-muted caption-shadow max-w-md text-sm md:text-base">{beat.line}</p>

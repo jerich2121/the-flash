@@ -16,22 +16,22 @@ const BEATS = [
   {
     n: "01",
     title: "Desert Speed",
-    line: "Full sprint across open desert, lightning trailing behind him, explosions already lighting up the horizon.",
+    line: "A full sprint across open desert — lightning streaming behind him, the horizon already lit with fire.",
   },
   {
     n: "02",
     title: "The Clash",
-    line: "A second lightning signature meets his — cyan-blue against red — and the two collide in a shockwave of energy.",
+    line: "A second lightning signature finds his — electric blue against crimson — and they collide in a shockwave you can feel.",
   },
   {
     n: "03",
     title: "No Hesitation",
-    line: "Glass shatters, sparks fly, and there's no time to think — just react, fist first.",
+    line: "Glass shatters, sparks scatter, and there's no time to think — just react, fist first.",
   },
   {
     n: "04",
     title: "Common Ground",
-    line: "Through the wreckage, two lightning trails — red and cyan — finally reach the same hand.",
+    line: "Through the wreckage, two trails — red and blue — finally reach the same outstretched hand.",
   },
 ] as const;
 
@@ -99,8 +99,8 @@ export default function RunBreakdown() {
             split="words"
             className="body-muted max-w-2xl text-[1.05rem]"
           >
-            The run told its story in two parts with a gallery breather in between,
-            but it all breaks down into four distinct beats. Here&apos;s the rundown.
+            The run unfolds in two parts, with a gallery to catch your breath between
+            them — but strip it down and it&apos;s four beats, one unbroken sprint.
           </RevealText>
         </div>
 
@@ -117,7 +117,7 @@ export default function RunBreakdown() {
               <span className="mono text-[0.7rem] tracking-[0.2em] text-[var(--accent-2)]">
                 {beat.n}
               </span>
-              <h3 className="display text-[1.05rem] text-[var(--white)]">{beat.title}</h3>
+              <h3 className="display title-gradient text-[1.05rem]">{beat.title}</h3>
               <p className="body-muted text-sm leading-relaxed">{beat.line}</p>
             </div>
           ))}

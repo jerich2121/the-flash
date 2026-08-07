@@ -141,6 +141,24 @@ input:focus-visible,
   line-height: 1.6;
 }
 
+/* Static crimson -> gold -> speed-force gradient fill for plain (non-split,
+   non-GSAP) titles — e.g. the scroll-caption scene titles over the video.
+   Mirrors MixedHeadline's accent gradient so emphasis reads consistently
+   across animated headlines and static ones. Legibility over bright footage
+   comes from filter: drop-shadow, NOT text-shadow: because the glyphs are
+   filled transparent (so the gradient shows through the clip), a text-shadow
+   would be painted behind the letters and bleed through the transparent fill
+   as a dark smudge down the middle of each character. drop-shadow shadows the
+   painted gradient shape instead, so it darkens only the outline. */
+.title-gradient {
+  background: linear-gradient(100deg, var(--accent) 0%, var(--gold) 55%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6));
+}
+
 .section-marker {
   position: absolute;
   font-family: var(--font-hud), monospace;
@@ -148,6 +166,23 @@ input:focus-visible,
   letter-spacing: 0.2em;
   color: var(--muted);
   text-transform: uppercase;
+}
+
+/* Cinematic vignette for the scrub-video sections — transparent through the
+   center so the footage reads clean, easing to a charred-red then near-black
+   edge (--accent-deep falloff) so the frame edges tie into the Flash palette
+   and the gradient scene captions pop harder against darkened corners. Sits
+   above the video but below any z-20 caption/badge chrome. */
+.video-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 100% 85% at 50% 48%,
+    transparent 42%,
+    rgba(74, 10, 16, 0.22) 78%,
+    rgba(3, 1, 1, 0.62) 100%
+  );
 }
 
 /* ---------- Film grain overlay ---------- */

@@ -11,9 +11,15 @@
 // wordmark is still an unfilled gold outline at 2.0s and fully colored by
 // 2.6-2.9s, so chrome (kicker, tagline, CTA) fades in from that point
 // rather than competing with the title animation itself.
+//
+// Six frames (97, 99, 101, 103, 105, 107 in the original 108-frame extract)
+// alternated to roughly half brightness against their neighbors — a flicker
+// artifact in the source. Rather than patch them in place, they were
+// deleted outright and the remaining 102 frames renumbered contiguously,
+// so FRAME_COUNT/CLIP_DURATION below reflect the shorter, flicker-free cut.
 
-export const CLIP_DURATION = 3.6;
-export const FRAME_COUNT = 108; // native 30fps, no interpolation, libwebp q:v 95
+export const CLIP_DURATION = 102 / 30; // 3.4s
+export const FRAME_COUNT = 102; // native 30fps, flicker frames removed, libwebp q:v 95
 export const FRAME_FPS = 30;
 
 function toProgress(t: number): number {
@@ -22,13 +28,3 @@ function toProgress(t: number): number {
 
 export const TITLE_REVEAL_SECONDS = 2.8;
 export const TITLE_REVEAL_PROGRESS = toProgress(TITLE_REVEAL_SECONDS);
-
-export function frameForProgress(progress: number): number {
-  const idx = Math.round(progress * (FRAME_COUNT - 1));
-  return Math.min(FRAME_COUNT - 1, Math.max(0, idx));
-}
-
-export function framePath(index: number): string {
-  const n = String(index + 1).padStart(4, "0");
-  return `/frames/flash-hero/frame_${n}.webp`;
-}

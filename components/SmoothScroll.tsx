@@ -25,6 +25,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       touchMultiplier: 0.5,
     });
     lenisRef.current = lenis;
+    (window as unknown as { __lenis?: Lenis; __gsap?: typeof gsap }).__lenis = lenis;
+    (window as unknown as { __lenis?: Lenis; __gsap?: typeof gsap }).__gsap = gsap;
     document.documentElement.classList.add("has-lenis");
 
     lenis.on("scroll", ScrollTrigger.update);

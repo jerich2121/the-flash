@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Sora, JetBrains_Mono } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -56,6 +57,7 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${sora.variable} ${jetbrainsMono.variable} h-full`}
     >
       <body className="min-h-full bg-[var(--bg-dark)] text-[var(--white)] antialiased">
+        <ScrollProgressBar />
         <SmoothScroll>{children}</SmoothScroll>
         <div className="grain" aria-hidden="true" />
       </body>

@@ -278,6 +278,25 @@ input:focus-visible,
   opacity: 0;
 }
 
+/* Gradient-text headlines (MixedHeadline's accent segments) are animated via
+   GSAP SplitText (RevealText/ZoomFlowChars), which wraps each word/char in
+   its own nested inline-block span and sets an inline `transform` on it
+   (even at rest, GSAP leaves an identity matrix rather than clearing the
+   style). Any transformed descendant gets promoted to its own GPU
+   compositing layer, and Chromium cannot paint an ancestor's
+   `background-clip: text` gradient through a descendant's separate
+   compositing layer — same documented bug the eco-power sibling project hit
+   and fixed the same way: force every descendant to explicitly re-inherit
+   the clipped-gradient properties instead of relying on normal CSS
+   inheritance to reach across the layer boundary. */
+.gradient-text * {
+  background-image: inherit;
+  -webkit-background-clip: inherit;
+  background-clip: inherit;
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

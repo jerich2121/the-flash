@@ -82,7 +82,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-1 text-[0.7rem] text-[var(--muted)]">
           <span className="mono">© {new Date().getFullYear()} KRYNTIX STUDIO — FAN PROJECT, NOT AFFILIATED WITH WARNER BROS., DC, OR DC STUDIOS</span>
-          <span className="mono">Title card footage used for a non-commercial fan edit. All Flash-related trademarks belong to their respective owners.</span>
+          <span className="mono">Made for non-commercial fan enjoyment. All Flash-related trademarks belong to their respective owners.</span>
         </div>
       </div>
     </footer>

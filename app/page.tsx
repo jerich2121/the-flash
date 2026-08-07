@@ -7,6 +7,7 @@ import RunBreakdown from "@/components/RunBreakdown";
 import SectionBridge from "@/components/SectionBridge";
 import FanArtGallery from "@/components/FanArtGallery";
 import FootageHeadline from "@/components/FootageHeadline";
+import Faq from "@/components/Faq";
 import MarqueeTicker from "@/components/MarqueeTicker";
 import MotionOrchestrator from "@/components/MotionOrchestrator";
 import CTA from "@/components/CTA";
@@ -53,6 +54,7 @@ export default function Home() {
         <FootageHeadline />
         <MarqueeTicker />
         <HeroTransition />
+        <Faq />
         <CTA />
         <Footer />
       </main>
